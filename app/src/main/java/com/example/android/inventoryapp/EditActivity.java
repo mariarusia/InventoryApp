@@ -69,6 +69,7 @@ public class EditActivity extends AppCompatActivity implements
      */
     private boolean mBookHasChanged = false;
 
+    private String name;
 
     /**
      * OnTouchListener that listens for any user touches on a View, implying that they are modifying
@@ -164,6 +165,20 @@ public class EditActivity extends AppCompatActivity implements
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.setType("text/html");
+                Log.v(LOG_TAG, "subject" + name);
+
+                name = mNameEditText.getText().toString();
+                if (!name.isEmpty()) {
+
+                    intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.order_subject) + name);
+                    intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.order_body) + name);
+
+                }else{
+                    //in case there is no name we`ll leave the book blank
+                    intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.order_subject));
+                    intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.order_body));
+                }
+
                 startActivity(Intent.createChooser(intent, "Send Email"));
             }
         });
@@ -176,7 +191,7 @@ public class EditActivity extends AppCompatActivity implements
             public void onClick(View view) {
 
                 Intent in = new Intent(
-                        Intent.ACTION_PICK,
+                        Intent.ACTION_OPEN_DOCUMENT,
                         android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 
                 startActivityForResult(in, 1); //the code that we use to know that the pic was laded
@@ -469,7 +484,7 @@ public class EditActivity extends AppCompatActivity implements
 
 
             // Extract out the value from the Cursor for the given column index
-            String name = cursor.getString(nameColumnIndex);
+            name = cursor.getString(nameColumnIndex);
             int price = cursor.getInt(priceColumnIndex);
             int quantity = cursor.getInt(quantityColumnIndex);
 

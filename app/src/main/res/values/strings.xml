@@ -43,4 +43,6 @@
     <string name="no_price">You have not entered a price, the book not saved</string>
     <string name="no_quantity">You have not entered the quantity, the book not saved</string>
     <string name="no_pic">You have not loaded a picture, the pet not saved</string>
+    <string name="order_subject">Order more items of a book:</string>
+    <string name="order_body">"I would like to order 50 more copies of "</string>
 </resources>
